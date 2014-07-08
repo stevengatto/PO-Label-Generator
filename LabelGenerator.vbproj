@@ -95,6 +95,7 @@
     <Content Include="App_Data\1-ClickPublish_log.ldf">
       <DependentUpon>1-ClickPublish.mdf</DependentUpon>
     </Content>
+    <Content Include="HowToUse.aspx" />
     <Content Include="site.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -108,7 +109,13 @@
     <Content Include="Default.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
+    <Compile Include="HowToUse.aspx.designer.vb">
+      <DependentUpon>HowToUse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HowToUse.aspx.vb">
+      <DependentUpon>HowToUse.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -142,6 +149,7 @@
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="SQLStrings.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
