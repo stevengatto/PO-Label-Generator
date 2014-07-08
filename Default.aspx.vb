@@ -378,17 +378,25 @@ Public Class WebForm1
     End Function
 
     '-------------------------------------------------------------------------------------------
-    ' Sub to loop through rows and print user requested quantity of labels
+    ' Sub to call small/large prints subroutines and zero out quantity fields
     '-------------------------------------------------------------------------------------------
     Private Sub PrintLabels()
         Dim numOfRows As Integer = GridView1.Rows.Count
+        PrintSmallLabels(numOfRows)
+        PrintLargeLabels(numOfRows)
+        ZeroOutQuantityFields(numOfRows)
+    End Sub
 
+
+    '-------------------------------------------------------------------------------------------
+    ' Sub to loop through small label quantities and print them
+    '-------------------------------------------------------------------------------------------
+    Private Sub PrintSmallLabels(ByVal numOfRows As Integer)
         'loop through rows and print labels
         For rowIndex As Integer = 0 To numOfRows - 1
             'find the number of copies entered by the user
             Dim rowCells As TableCellCollection = GridView1.Rows(rowIndex).Cells()
             Dim smallTextBox As TextBox = rowCells.Item(6).FindControl("smallLabelsTextBox")
-            Dim largeTextBox As TextBox = rowCells.Item(7).FindControl("largeLabelsTextBox")
 
             'convert no. of small copies to int and print labels
             Dim smallCopies As Integer = Convert.ToInt16(smallTextBox.Text)
@@ -411,7 +419,6 @@ Public Class WebForm1
                 'fill in designated fields on label
                 labelFormat.SubStrings.SetSubString("part_no", partNo)
                 labelFormat.SubStrings.SetSubString("quantity", quantity & " " & units)
-                'labelFormat.SubStrings.
 
                 'print however many copies desired
                 labelFormat.PrintSetup.IdenticalCopiesOfLabel = smallCopies
@@ -421,7 +428,18 @@ Public Class WebForm1
                 'close print engine
                 btEngine.Stop()
             End If
+        Next
+    End Sub
 
+    '-------------------------------------------------------------------------------------------
+    ' Sub to loop through large label quantities and print them
+    '-------------------------------------------------------------------------------------------
+    Private Sub PrintLargeLabels(ByVal numOfRows As Integer)
+        'loop through rows and print labels
+        For rowIndex As Integer = 0 To numOfRows - 1
+            'find the number of copies entered by the user
+            Dim rowCells As TableCellCollection = GridView1.Rows(rowIndex).Cells()
+            Dim largeTextBox As TextBox = rowCells.Item(7).FindControl("largeLabelsTextBox")
             'convert no. of large copies to int and print labels
             Dim largeCopies As Integer = Convert.ToInt16(largeTextBox.Text)
             If largeCopies > 0 Then
@@ -452,7 +470,6 @@ Public Class WebForm1
                 labelFormat.SubStrings.SetSubString("description", desc)
                 labelFormat.SubStrings.SetSubString("location", location)
                 labelFormat.SubStrings.SetSubString("purchaser", purchaser)
-                'labelFormat.SubStrings.
 
                 'print however many copies desired
                 labelFormat.PrintSetup.IdenticalCopiesOfLabel = largeCopies
@@ -463,7 +480,12 @@ Public Class WebForm1
                 btEngine.Stop()
             End If
         Next
+    End Sub
 
+    '-------------------------------------------------------------------------------------------
+    ' Sub to zero out small and large label quantity fields
+    '-------------------------------------------------------------------------------------------
+    Private Sub ZeroOutQuantityFields(ByVal numOfRows As Integer)
         'zero out all quantities
         For rowIndex As Integer = 0 To numOfRows - 1
             'find the number of copies entered by the user
