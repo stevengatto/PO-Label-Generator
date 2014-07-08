@@ -1,0 +1,49 @@
+﻿<!-- +--------------------------------------------------+ -->
+<!-- | Author: Steven Gatto - IT Intern                 | -->
+<!-- | Last Updated: 7/8/14                             | -->
+<!-- |                                                  | -->
+<!-- | This program is aimed to help the receiving      | -->
+<!-- | dept automate label printing and increase        | -->
+<!-- | productivity. Enjoy.                             | -->
+<!-- +--------------------------------------------------+ -->
+
+<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="Site.Master.vb" Inherits="_1_ClickPublish.Site1" %>
+
+<!DOCTYPE html />
+<html>
+<head runat="server">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="~/site.css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="Form1" runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    Receiving Department Label Generator
+                </h1>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="PO Lookup"/>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        <p>
+        </p>
+    </div>
+    </form>
+</body>
+</html>
