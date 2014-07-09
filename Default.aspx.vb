@@ -14,9 +14,11 @@ Imports System.Runtime.InteropServices
 Public Class WebForm1
     Inherits System.Web.UI.Page
 
-    Dim mainReader, quantityReader, purchaserReader, vendorReader, unitsReader As SqlDataReader
-    Dim conn As New SqlConnection(ConfigurationManager.ConnectionStrings("NAV-Dev-ConnectionString").ConnectionString)
-    Dim btPrintersList As Printers
+    Private mainReader, quantityReader, purchaserReader, vendorReader, unitsReader As SqlDataReader
+    Private conn As New SqlConnection(ConfigurationManager.ConnectionStrings("NAV-Dev-ConnectionString").ConnectionString) 
+    Private btPrintersList As Printers
+    'shared var to hold value of PO at the time of the "Search" button click event
+    Private Shared savedPONumber As String
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.LoadComplete
         'load dropdownlist of printers only when page is loaded for the first time
@@ -67,6 +69,9 @@ Public Class WebForm1
     ' Sub to handle "PO Search" button click. Calls helper subs/functions
     '-----------------------------------------------------------------------------------------
     Protected Sub PObutton_Click(sender As Object, e As EventArgs) Handles PObutton.Click
+        'save the PONumber that was searched
+        savedPONumber = POsearch.Text.ToUpper
+
         'set the majority of the content in the GridView
         setMainContent()
 
@@ -414,7 +419,7 @@ Public Class WebForm1
 
                 'print info
                 Dim btEngine As New Engine(True)
-                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open("C:\Users\sgatto\Documents\BarTender\BarTender Documents\1x2.btw")
+                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open("C:\Users\sgatto\Documents\BarTender\BarTender Documents\SmallRecvLabel.btw")
 
                 'fill in designated fields on label
                 labelFormat.SubStrings.SetSubString("part_no", partNo)
@@ -462,12 +467,13 @@ Public Class WebForm1
 
                 'print info
                 Dim btEngine As New Engine(True)
-                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open("C:\Users\sgatto\Documents\BarTender\BarTender Documents\4x2.btw")
+                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open("C:\Users\sgatto\Documents\BarTender\BarTender Documents\LargeRecvLabel.btw")
 
                 'fill in designated fields on label
                 labelFormat.SubStrings.SetSubString("part_no", partNo)
                 labelFormat.SubStrings.SetSubString("quantity", quantity & " " & units)
                 labelFormat.SubStrings.SetSubString("description", desc)
+                labelFormat.SubStrings.SetSubString("po_number", "PO# " & savedPONumber)
                 labelFormat.SubStrings.SetSubString("location", location)
                 labelFormat.SubStrings.SetSubString("purchaser", purchaser)
 

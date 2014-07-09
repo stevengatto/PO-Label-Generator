@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2 style="padding-left: 10px; font: bold;">
+    <h2 style="padding-left: 10px; color: Black;">
     Searching for a PO and Printing Labels
     </h2>
     <p>
@@ -14,12 +14,26 @@
     6) Click the <b>Print</b> button.<br />
     </p>
 
-    <h2 style="padding-left: 10px; font: bold;">
+    <h2 style="padding-left: 10px; color: Black;">
     Requirements
     </h2>
     <p>
     1) Use with DYMO LabelWriter 450 Twin Turbo <b>ONLY</b>.<br />
     2) Use <b>ULine S-8503</b> labels on the left roller and <b>ULine S-8505</b> labels on the right roller.<br />
-    3) Report any bugs to <a href="mailto:lewing@ipgphotonics.com&subject=Receiving Dept. Label Generator Bug Report"><b>Lindsay Ewing</b></a> in the IT Department.<br />
+    3) Report any bugs to the <a href="mailto:helpdesk.us@ipgphotonics.com&subject=Receiving Dept. Label Generator Bug Report"><b>IT Helpdesk</b></a> x2550<br />
     </p>
+
+    <h2 style="padding-left: 10px; color: Black;">
+    Label Examples
+    </h2><br />
+    <table>
+        <tr>
+            <td style="text-align: center;">S-8503 (Left Roll)</td>
+            <td style="text-align: center;">S-8505 (Right Roll)</td>
+        </tr>
+        <tr>
+            <td style="padding: 0px 30px 30px 30px; vertical-align: top;"><img src="SmallRecvLabel_small.jpg" alt="Small Receiving Label"/></td>
+            <td style="padding: 0px 30px 30px 30px; vertical-align: top;"><img src="LargeRecvLabel_small.jpg" alt="Small Receiving Label"/></td>
+        </tr>
+    </table>
 </asp:Content>
