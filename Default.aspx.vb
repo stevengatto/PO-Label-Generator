@@ -419,7 +419,7 @@ Public Class WebForm1
 
                 'print info
                 Dim btEngine As New Engine(True)
-                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open("C:\Users\sgatto\Documents\BarTender\BarTender Documents\SmallRecvLabel.btw")
+                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open(BartenderDocuments.SmallStaticLabel)
 
                 'fill in designated fields on label
                 labelFormat.SubStrings.SetSubString("part_no", partNo)
@@ -467,7 +467,7 @@ Public Class WebForm1
 
                 'print info
                 Dim btEngine As New Engine(True)
-                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open("C:\Users\sgatto\Documents\BarTender\BarTender Documents\LargeRecvLabel.btw")
+                Dim labelFormat As LabelFormatDocument = btEngine.Documents.Open(BartenderDocuments.LargeStaticLabel)
 
                 'fill in designated fields on label
                 labelFormat.SubStrings.SetSubString("part_no", partNo)

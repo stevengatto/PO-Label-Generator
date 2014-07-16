@@ -91,10 +91,11 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\1-ClickPublish.mdf" />
-    <Content Include="App_Data\1-ClickPublish_log.ldf">
-      <DependentUpon>1-ClickPublish.mdf</DependentUpon>
-    </Content>
+    <Content Include="Resources\Images\LargeRecvLabel.jpg" />
+    <Content Include="Resources\Images\LargeRecvLabel_small.jpg" />
+    <Content Include="Resources\Images\SmallRecvLabel.jpg" />
+    <Content Include="Resources\Images\SmallRecvLabel_small.jpg" />
+    <Content Include="CustomLabel.aspx" />
     <Content Include="HowToUse.aspx" />
     <Content Include="site.css" />
     <Content Include="Web.config">
@@ -109,6 +110,14 @@
     <Content Include="Default.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BartenderDocuments.vb" />
+    <Compile Include="CustomLabel.aspx.designer.vb">
+      <DependentUpon>CustomLabel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomLabel.aspx.vb">
+      <DependentUpon>CustomLabel.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="HowToUse.aspx.designer.vb">
       <DependentUpon>HowToUse.aspx</DependentUpon>
     </Compile>
@@ -160,6 +169,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Label Templates\FourLineCustomLargeLabel.btw" />
+    <None Include="Resources\Label Templates\LargeStaticRecvLabel.btw" />
+    <None Include="Resources\Label Templates\OneLineCustomLargeLabel.btw" />
+    <None Include="Resources\Label Templates\OneLineCustomSmallLabel.btw" />
+    <None Include="Resources\Label Templates\SmallStaticRecvLabel.btw" />
+    <None Include="Resources\Label Templates\ThreeLineCustomLargeLabel.btw" />
+    <None Include="Resources\Label Templates\TwoLineCustomLargeLabel.btw" />
+    <None Include="Resources\Label Templates\TwoLineCustomSmallLabel.btw" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -170,8 +187,11 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <Content Include="Site.Master" />
+    <None Include="README.md" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

@@ -119,7 +119,7 @@ first child of the left and right table columns */
 {
     padding: 0px 12px;
     margin: 12px 8px 8px 8px;
-    min-height: 420px;
+    min-height: 420px; 
 }
 
 .leftCol
@@ -239,6 +239,10 @@ div.accountInfo
 
 /* MISC  
 ----------------------------------------------------------*/
+
+textarea {
+    resize: none;
+}
 
 .clear
 {
