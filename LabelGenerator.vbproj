@@ -46,6 +46,29 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>1-ClickPublish.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>1-ClickPublish.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Seagull.BarTender.Print, Version=10.0.3.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -98,6 +121,7 @@
     <Content Include="CustomLabel.aspx" />
     <Content Include="HowToUse.aspx" />
     <Content Include="site.css" />
+    <Content Include="Default.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -107,16 +131,16 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Default.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllowedPrinters.vb" />
     <Compile Include="BartenderDocuments.vb" />
     <Compile Include="CustomLabel.aspx.designer.vb">
       <DependentUpon>CustomLabel.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomLabel.aspx.vb">
       <DependentUpon>CustomLabel.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="HowToUse.aspx.designer.vb">
       <DependentUpon>HowToUse.aspx</DependentUpon>
@@ -156,7 +180,7 @@
     </Compile>
     <Compile Include="Default.aspx.vb">
       <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SQLStrings.vb" />
   </ItemGroup>
@@ -169,14 +193,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Label Templates\FourLineCustomLargeLabel.btw" />
-    <None Include="Resources\Label Templates\LargeStaticRecvLabel.btw" />
-    <None Include="Resources\Label Templates\OneLineCustomLargeLabel.btw" />
-    <None Include="Resources\Label Templates\OneLineCustomSmallLabel.btw" />
-    <None Include="Resources\Label Templates\SmallStaticRecvLabel.btw" />
-    <None Include="Resources\Label Templates\ThreeLineCustomLargeLabel.btw" />
-    <None Include="Resources\Label Templates\TwoLineCustomLargeLabel.btw" />
-    <None Include="Resources\Label Templates\TwoLineCustomSmallLabel.btw" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -188,6 +204,10 @@
     </None>
     <Content Include="Site.Master" />
     <None Include="README.md" />
+    <None Include="Resources\Label Templates\LargeStaticRecvLabel.btw" />
+    <None Include="Resources\Label Templates\LayeredCustomLargeLabel.btw" />
+    <None Include="Resources\Label Templates\LayeredCustomSmallLabel.btw" />
+    <None Include="Resources\Label Templates\SmallStaticRecvLabel.btw" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

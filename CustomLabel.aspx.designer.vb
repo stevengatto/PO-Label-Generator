@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class WebForm3
+Partial Public Class CustomLabel
 
     '''<summary>
     '''dropdownlist control.

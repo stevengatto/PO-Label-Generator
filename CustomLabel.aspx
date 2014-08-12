@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="CustomLabel.aspx.vb" Inherits="_1_ClickPublish.WebForm3" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="CustomLabel.aspx.vb" Inherits="_1_ClickPublish.CustomLabel" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -33,9 +33,9 @@
     <br />
     <i>Important Notes:</i> <br />
     <ul>
+        <li><i>If a line overflows onto the next line, it will appear as <b>one line</b> on the label.</i></li>
         <li><i>A separate line will <b>only</b> be created when you press <b>Enter</b>.</i></li>
         <li><i><b>Do not</b> copy and paste into the <b> Text Area</b>.</i></li>
-        <li><i>If a line overflows onto the next line, it will appear as <b>one line</b> on the label.</i></li>
     </ul>
 </asp:Content>
 

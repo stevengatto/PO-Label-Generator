@@ -1,29 +1,31 @@
 ﻿'+--------------------------------------------------+
 '| Author: Steven Gatto - IT Intern                 |
-'| Last Updated: 7/8/14                             |
+'| Last Updated: 7/25/14                            |
 '|                                                  |
 '| This program is aimed to help the receiving      |
 '| dept automate label printing and increase        |
-'| productivity. Enjoy.                             |
+'| productivity.                                    |
 '+--------------------------------------------------+
 
 Imports System.Data.SqlClient
 Imports Seagull.BarTender.Print
 Imports System.Runtime.InteropServices
 
-Public Class WebForm1
+Public Class Main
     Inherits System.Web.UI.Page
 
     Private mainReader, quantityReader, purchaserReader, vendorReader, unitsReader As SqlDataReader
-    Private conn As New SqlConnection(ConfigurationManager.ConnectionStrings("NAV-Dev-ConnectionString").ConnectionString) 
+    Private conn As New SqlConnection(ConfigurationManager.ConnectionStrings("NAV-Prod-ConnectionString").ConnectionString)
     Private btPrintersList As Printers
     'shared var to hold value of PO at the time of the "Search" button click event
     Private Shared savedPONumber As String
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.LoadComplete
         'load dropdownlist of printers only when page is loaded for the first time
         If Not IsPostBack Then loadPrinterList()
     End Sub
+
 
     '-----------------------------------------------------------------------------------------
     ' Sub to set up list of printers in drop down list
@@ -34,6 +36,7 @@ Public Class WebForm1
         ignoreList.Add("Fax")
         ignoreList.Add("Microsoft XPS Document Writer")
         ignoreList.Add("Send To OneNote 2010")
+        ignoreList.Add("\\IPG410-1128-04\ZDesigner TLP 2844")
 
         ' Initialize a new BarTender print engine.
         Using btEngine As New Engine()
@@ -46,24 +49,36 @@ Public Class WebForm1
             ' datasource list for DropDownList
             Dim strPrinterList As New List(Of String)
 
-            ' add default printer first so its on the top of the list
-            strPrinterList.Add(btPrintersList.Default.PrinterName)
             ' loop through the list of printers
             For Each p In btPrintersList
-                ' dont add default printer or printers in ignore list 
-                If Not p.IsDefault And Not ignoreList.Contains(p.PrinterName) Then
-                    strPrinterList.Add(p.PrinterName)
+                ' dont add printers in ignore list 
+                If Not ignoreList.Contains(p.PrinterName) Then
+                    ' change printer names to their display names
+                    If p.PrinterName.Equals(AllowedPrinters.DanPrinterNetworkPath) Then
+                        strPrinterList.Add(AllowedPrinters.DanPrinterDisplayName)
+                    ElseIf p.PrinterName.Equals(AllowedPrinters.RonPrinterNetworkPath) Then
+                        strPrinterList.Add(AllowedPrinters.RonPrinterDisplayName)
+                    ElseIf p.PrinterName.Equals(AllowedPrinters.ErikPrinterNetworkPath) Then
+                        strPrinterList.Add(AllowedPrinters.ErikPrinterDisplayName)
+                    ElseIf p.PrinterName.Equals(AllowedPrinters.PrestonPrinterNetworkPath) Then
+                        strPrinterList.Add(AllowedPrinters.PrestonPrinterDisplayName)
+                    Else
+                        strPrinterList.Add(p.PrinterName)
+                    End If
                 End If
             Next
 
             ' bind data to DropDownList
             dropdownlist.DataSource = strPrinterList
+
+            'dropdownlist.DataSource = strPrinterList
             dropdownlist.DataBind()
 
             ' Stop the BarTender print engine.
             btEngine.Stop()
         End Using
     End Sub
+
 
     '-----------------------------------------------------------------------------------------
     ' Sub to handle "PO Search" button click. Calls helper subs/functions
@@ -91,8 +106,8 @@ Public Class WebForm1
             printbutton.Visible = False
             dropdownlist.Visible = False
         End If
-
     End Sub
+
 
     '-----------------------------------------------------------------------------------------
     ' Sub to set main content of the GridView
@@ -120,6 +135,7 @@ Public Class WebForm1
         'bind data to gridview no matter what the outcome (to display Data or EmptyDataText)
         GridView1.DataBind()
     End Sub
+
 
     '-----------------------------------------------------------------------------------------
     ' Sub to set Vendor table values
@@ -158,6 +174,7 @@ Public Class WebForm1
             tbWarning.Text = "There has been an error. Vendor was not retrieved."
         End Try
     End Sub
+
 
     '-----------------------------------------------------------------------------------------
     ' Sub to set "Quantity" values
@@ -201,6 +218,7 @@ Public Class WebForm1
         End Try
     End Sub
 
+
     '-----------------------------------------------------------------------------------------
     ' Sub to set "Purchaser" values
     '-----------------------------------------------------------------------------------------
@@ -241,6 +259,7 @@ Public Class WebForm1
             tbWarning.Text = "There has been an error. Purchasers were not retrieved."
         End Try
     End Sub
+
 
     '-----------------------------------------------------------------------------------------
     ' Sub to set "Units" values
@@ -283,6 +302,7 @@ Public Class WebForm1
         End Try
     End Sub
 
+
     '-----------------------------------------------------------------------------------------
     ' Sub to handle click event of Print button. Calls helper functions and print subroutine
     '-----------------------------------------------------------------------------------------
@@ -296,6 +316,7 @@ Public Class WebForm1
             PrintLabels()
         End If
     End Sub
+
 
     '-------------------------------------------------------------------------------------------
     ' Function to check the values of "Copies" fields to ensure they are not all zeros
@@ -328,6 +349,7 @@ Public Class WebForm1
         Return False
     End Function
 
+
     '-------------------------------------------------------------------------------------------
     ' Function to check the values of "Copies" fields to ensure they are all numerical values
     '-------------------------------------------------------------------------------------------
@@ -359,6 +381,7 @@ Public Class WebForm1
         Return True
     End Function
 
+
     '-------------------------------------------------------------------------------------------
     ' Function to check the values of "Quantity" fields to ensure they are all numerical values
     '-------------------------------------------------------------------------------------------
@@ -381,6 +404,7 @@ Public Class WebForm1
         Next
         Return True
     End Function
+
 
     '-------------------------------------------------------------------------------------------
     ' Sub to call small/large prints subroutines and zero out quantity fields
@@ -427,7 +451,21 @@ Public Class WebForm1
 
                 'print however many copies desired
                 labelFormat.PrintSetup.IdenticalCopiesOfLabel = smallCopies
-                labelFormat.PrintSetup.PrinterName = dropdownlist.SelectedItem.ToString
+
+                'decide which printer to print to
+                Dim printerSelected As String = dropdownlist.SelectedItem.ToString
+                If printerSelected = AllowedPrinters.DanPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.DanPrinterNetworkPath
+                ElseIf printerSelected = AllowedPrinters.RonPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.RonPrinterNetworkPath
+                ElseIf printerSelected = AllowedPrinters.PrestonPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.PrestonPrinterNetworkPath
+                ElseIf printerSelected = AllowedPrinters.ErikPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.ErikPrinterNetworkPath
+                Else
+                    labelFormat.PrintSetup.PrinterName = printerSelected
+                End If
+
                 labelFormat.Print()
 
                 'close print engine
@@ -435,6 +473,7 @@ Public Class WebForm1
             End If
         Next
     End Sub
+
 
     '-------------------------------------------------------------------------------------------
     ' Sub to loop through large label quantities and print them
@@ -479,7 +518,21 @@ Public Class WebForm1
 
                 'print however many copies desired
                 labelFormat.PrintSetup.IdenticalCopiesOfLabel = largeCopies
-                labelFormat.PrintSetup.PrinterName = dropdownlist.SelectedItem.ToString
+
+                'decide which printer to print to
+                Dim printerSelected As String = dropdownlist.SelectedItem.ToString
+                If printerSelected = AllowedPrinters.DanPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.DanPrinterNetworkPath
+                ElseIf printerSelected = AllowedPrinters.RonPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.RonPrinterNetworkPath
+                ElseIf printerSelected = AllowedPrinters.PrestonPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.PrestonPrinterNetworkPath
+                ElseIf printerSelected = AllowedPrinters.ErikPrinterDisplayName Then
+                    labelFormat.PrintSetup.PrinterName = AllowedPrinters.ErikPrinterNetworkPath
+                Else
+                    labelFormat.PrintSetup.PrinterName = printerSelected
+                End If
+
                 labelFormat.Print()
 
                 'close print engine
@@ -487,6 +540,7 @@ Public Class WebForm1
             End If
         Next
     End Sub
+
 
     '-------------------------------------------------------------------------------------------
     ' Sub to zero out small and large label quantity fields
@@ -502,4 +556,6 @@ Public Class WebForm1
             largeTextBox.Text = "0"
         Next
     End Sub
+
+
 End Class
